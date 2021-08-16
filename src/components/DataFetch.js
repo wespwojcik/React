@@ -20,16 +20,23 @@ function DataFetch() {
                 console.log(res)
                 setUsers(res.data)
             })
-            .catch(err =>
-                console.log(err)
+            .catch(
+                () => {
+                    setUsers("");
+                }
             )
     }, [id])
     useEffect(() => {
-        axios.get(`https://jsonplaceholder.typicode.com/users/1`)
+        axios.get(`https://jsonplaceholder.typicode.com/users/2`)
             .then(res => {
-
+                console.log(res)
                 setCompany(res.data.company)
             })
+            .catch(
+                () => {
+                    setCompany("");
+                }
+            )
     }, [id])
     useEffect(() => {
         axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
@@ -37,6 +44,11 @@ function DataFetch() {
                 console.log(res)
                 setPosts(res.data)
             })
+            .catch(
+                () => {
+                    setPosts("");
+                }
+            )
     }, [id])
 
     return (
@@ -50,7 +62,7 @@ function DataFetch() {
                 </Modal.Header>
                 <Modal.Body className="Body">Woohoo, you're reading this text in a modal!
                     <input type="text" value={id} onChange={e => setId(e.target.value)} />
-                    {id > 0 && id >= 1 ?
+                    {id > 0 && id >= 1 && id < 10 ?
                         <>
                             <h3><b>Title: </b>{post.title}</h3>
                             <div><b>User Name: </b>{user.name}</div>
@@ -58,8 +70,16 @@ function DataFetch() {
                             {console.log(Company.catchPhrase)}
                             <div><b>Body:</b> {post.body}</div>
                         </>
-                        : <h2>Enter A Number!</h2>
+                        : <></>
                     }
+                    {id >= 10 && id <= 100 ?
+                        <>
+                            <h3><b>Title: </b>{post.title}</h3>
+                            <div><b>Body:</b> {post.body}</div>
+                        </>
+                        : <></>
+                    }
+
                 </Modal.Body>
 
                 <Modal.Footer>
